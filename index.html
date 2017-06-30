@@ -1,0 +1,102 @@
+<html ng-app="formaApp">
+    
+    <head>
+        <meta charset="utf-8"/>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.js"></script>
+        <script src="https://cdn.rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.js"></script>
+        <link href="https://cdn.rawgit.com/indrimuska/angular-moment-picker/master/dist/angular-moment-picker.min.css" rel="stylesheet">
+        <script src="js/script.js"></script>
+    </head>
+    
+    <body ng-controller="FormaController as formaCtrl">
+    <div class="container-fluid">
+      <div class="row">
+        <h1>Gestion des formations</h1>
+        <div class="col-md-8">
+          <table class="table">
+            <tbody>
+              <tr>
+                <th>Nom</th>
+                <th>Date</th>
+                <th>Lieu</th>
+                <th>Places libres</th>
+              </tr>
+              <tr ng-repeat="formation in formaCtrl.formations">
+                <td>
+                  {{formation.name}}
+                </td>
+                <td>{{formation.datetime.date | date : "dd/MM/yyyy"}}</td>
+                <td>{{formation.place.name}}</td>
+                <td>{{formation.spotsLeft}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-4">
+          <form ng-submit="formaCtrl.addForma()">
+            <div class="form-group">
+              <label for="name">Nom de la formation</label>
+              <input type="text" class="form-control" id="name" ng-model="formaCtrl.newName" />
+            </div>
+            <div class="form-group">
+              <label for="seats">Nombre de places</label>
+              <input type="number" class="form-control" id="seats" ng-model="formaCtrl.newAvailableSpots" />
+            </div>
+            <div class="form-group">
+              <label for="date">Date</label>
+              <div class="input-group" moment-picker="formaCtrl.newDate" format="DD-MM-YYYY">
+                    <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                    </span>
+                    <input class="form-control" placeholder="Choisi une date" ng-model="formaCtrl.newDate" ng-model-options="{ updateOn: 'blur' }">
+              </div>
+            </div>
+            <div class="form-group" moment-picker="formaCtrl.newHourStart" format="HH:mm">
+                <label for="start">Heure de début</label>
+                <div class="input-group">
+                 <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-time"></i>
+                </span>
+                <input class="form-control" placeholder="Choisi une heure" ng-model="formaCtrl.newHourStart" ng-model-options="{ updateOn: 'blur' }" id="start">
+                </div>
+            </div>
+            <div class="form-group" moment-picker="formaCtrl.newHourEnd" format="HH:mm">
+                <label for="start">Heure de fin</label>
+                <div class="input-group">
+                 <span class="input-group-addon">
+                    <i class="glyphicon glyphicon-time"></i>
+                </span>
+                <input class="form-control" placeholder="Choisi une heure" ng-model="formaCtrl.newHourEnd" ng-model-options="{ updateOn: 'blur' }" id="end">
+                </div>
+            </div>
+            <div class="form-group">
+              <label for="place-name">Lieu de formation</label>
+              <input type="text" class="form-control" id="place-name" ng-model="formaCtrl.newPlaceName" />
+            </div>
+            <div class="form-group">
+              <label for="place-street">Rue</label>
+              <input type="text" class="form-control" id="place-street" ng-model="formaCtrl.newPlaceStreet" />
+            </div>
+            <div class="form-group">
+              <label for="place-number">Numéro</label>
+              <input type="text" class="form-control" id="place-number" ng-model="formaCtrl.newPlaceNumber" />
+            </div>
+            <div class="form-group">
+              <label for="place-zip">Code Postal</label>
+              <input type="text" class="form-control" id="place-zip" ng-model="formaCtrl.newPlaceZip" />
+            </div>
+            <div class="form-group">
+              <label for="place-city">Ville</label>
+              <input type="text" class="form-control" id="place-city" ng-model="formaCtrl.newPlaceCity" />
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary">Enregistrer la formation</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
